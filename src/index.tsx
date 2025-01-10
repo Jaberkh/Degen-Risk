@@ -581,6 +581,6 @@ console.log("Generated Comment URL:", commentUrl);
 
 const port = process.env.PORT || 3000;
 
-serve(app);; // استفاده از serve برای راه‌اندازی سرور
-
+// اطمینان از استفاده صحیح از عدد به عنوان پورت
+serve(app);
 console.log(`Server is running on port ${port}`);
