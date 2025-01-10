@@ -3,9 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "frog dev",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "dev": "frog dev"
   },
   "dependencies": {
     "@airstack/frames": "^1.2.0",
