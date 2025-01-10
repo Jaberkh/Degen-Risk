@@ -1,16 +1,10 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.app = void 0;
-const jsx_runtime_1 = require("frog/jsx/jsx-runtime");
-const serve_static_1 = require("@hono/node-server/serve-static");
-const frog_1 = require("frog");
-const middlewares_1 = require("frog/middlewares");
-const node_server_1 = require("@hono/node-server");
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+import { jsx as _jsx, jsxs as _jsxs } from "frog/jsx/jsx-runtime";
+import { serveStatic } from '@hono/node-server/serve-static';
+import { Button, Frog } from 'frog';
+import { neynar } from 'frog/middlewares';
+import { serve } from '@hono/node-server';
+import dotenv from 'dotenv';
+dotenv.config();
 // بررسی کلیدهای API
 const AIRSTACK_API_KEY = process.env.AIRSTACK_API_KEY;
 if (!AIRSTACK_API_KEY) {
@@ -18,7 +12,7 @@ if (!AIRSTACK_API_KEY) {
     throw new Error("AIRSTACK_API_KEY is missing");
 }
 const NEYNAR_API_KEY = "NEYNAR_FROG_FM";
-exports.app = new frog_1.Frog({
+export const app = new Frog({
     title: 'Degen Tips Risk',
     imageAspectRatio: '1:1',
     imageOptions: {
@@ -44,11 +38,11 @@ exports.app = new frog_1.Frog({
         },
     },
 });
-exports.app.use((0, middlewares_1.neynar)({
+app.use(neynar({
     apiKey: NEYNAR_API_KEY,
     features: ["interactor"],
 }));
-exports.app.use('/*', (0, serve_static_1.serveStatic)({ root: './public' }));
+app.use('/*', serveStatic({ root: './public' }));
 // تابع واکشی اطلاعات points
 async function fetchPoints(fid, season = "current") {
     const apiUrl = `https://api.degen.tips/airdrop2/${season}/points?fid=${fid.toString()}`;
@@ -157,7 +151,7 @@ async function calculateTipsFromTopUsersToCurrentUser(topUsers, currentFid) {
     }
     return tipDataForAllUsers; // داده‌ها را بازگردانید
 }
-exports.app.frame('/', async (c) => {
+app.frame('/', async (c) => {
     const fid = c.req.query('fid') || c.var.interactor?.fid || "?";
     const username = c.req.query('username') || c.var.interactor?.username || "Unknown";
     const pfpUrl = c.req.query('pfpUrl') || c.var.interactor?.pfpUrl || "";
@@ -220,7 +214,7 @@ exports.app.frame('/', async (c) => {
     console.log("Generated Comment URL:", commentUrl);
     const shareUrl = generateShareUrl(fid, username, pfpUrl, points);
     return c.res({
-        image: ((0, jsx_runtime_1.jsxs)("div", { style: {
+        image: (_jsxs("div", { style: {
                 position: 'relative',
                 width: '100%',
                 height: '100%',
@@ -228,13 +222,13 @@ exports.app.frame('/', async (c) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-            }, children: [(0, jsx_runtime_1.jsx)("img", { src: "https://i.imgur.com/qM7Ta8m.png", alt: "Full Frame Background", style: {
+            }, children: [_jsx("img", { src: "https://i.imgur.com/qM7Ta8m.png", alt: "Full Frame Background", style: {
                         width: '100%',
                         height: '100%',
                         objectFit: 'contain',
                         position: 'absolute',
                         zIndex: -1,
-                    } }), (0, jsx_runtime_1.jsxs)("div", { style: {
+                    } }), _jsxs("div", { style: {
                         position: 'absolute',
                         top: '5%',
                         left: '43%',
@@ -243,26 +237,26 @@ exports.app.frame('/', async (c) => {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                    }, children: [(0, jsx_runtime_1.jsx)("p", { style: {
+                    }, children: [_jsx("p", { style: {
                                 fontSize: '36px',
                                 fontWeight: 'bold',
                                 fontFamily: "'Lilita One', sans-serif",
                                 color: 'cyan',
                                 marginBottom: '5px',
-                            }, children: username }), (0, jsx_runtime_1.jsx)("p", { style: {
+                            }, children: username }), _jsx("p", { style: {
                                 fontSize: '18px',
                                 fontWeight: 'normal',
                                 fontFamily: "'Poppins', sans-serif",
                                 color: 'white',
                                 marginTop: '0px',
-                            }, children: fid }), points && ((0, jsx_runtime_1.jsxs)("p", { style: {
+                            }, children: fid }), points && (_jsxs("p", { style: {
                                 fontSize: '35px',
                                 top: '16.5%',
                                 fontWeight: 'bold',
                                 fontFamily: "'Lilita One', sans-serif",
                                 color: 'lightgreen',
                                 marginTop: '10px',
-                            }, children: ["Points: ", points] }))] }), (0, jsx_runtime_1.jsx)("div", { style: {
+                            }, children: ["Points: ", points] }))] }), _jsx("div", { style: {
                         position: 'absolute',
                         top: '47.5%',
                         left: '50.5%',
@@ -272,13 +266,13 @@ exports.app.frame('/', async (c) => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '15px', // فاصله بین آیتم‌ها
-                    }, children: topUsers.map((user) => ((0, jsx_runtime_1.jsx)("p", { style: {
+                    }, children: topUsers.map((user) => (_jsx("p", { style: {
                             color: "#90caf9",
                             fontSize: '25px',
                             fontWeight: '100',
                             fontFamily: "'Lilita One', sans-serif",
                             margin: '0',
-                        }, children: user.username }, user.fid))) }), (0, jsx_runtime_1.jsx)("div", { style: {
+                        }, children: user.username }, user.fid))) }), _jsx("div", { style: {
                         position: 'absolute',
                         top: '85%', // موقعیت دلخواه برای پیام
                         left: '50%',
@@ -288,7 +282,7 @@ exports.app.frame('/', async (c) => {
                         fontWeight: 'bold',
                         fontFamily: "'Lilita One', sans-serif",
                         textAlign: 'center',
-                    }, children: statusMessage }), (0, jsx_runtime_1.jsx)("div", { style: {
+                    }, children: statusMessage }), _jsx("div", { style: {
                         position: 'absolute',
                         top: '48%',
                         left: '38%',
@@ -298,19 +292,19 @@ exports.app.frame('/', async (c) => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '13px',
-                    }, children: tipDataForAllUsers && tipDataForAllUsers.length > 0 ? (tipDataForAllUsers.map((data) => ((0, jsx_runtime_1.jsx)("p", { style: {
+                    }, children: tipDataForAllUsers && tipDataForAllUsers.length > 0 ? (tipDataForAllUsers.map((data) => (_jsx("p", { style: {
                             color: '#9ef01a',
                             fontSize: '20px',
                             fontWeight: '400',
                             fontFamily: "Poppins, sans-serif",
                             margin: '0',
-                        }, children: data.totalTipCount || '0' }, data.userFid + '-totalTipCount')))) : ((0, jsx_runtime_1.jsx)("p", { style: {
+                        }, children: data.totalTipCount || '0' }, data.userFid + '-totalTipCount')))) : (_jsx("p", { style: {
                             color: '#ff8c00',
                             fontSize: '20px',
                             fontWeight: '400',
                             fontFamily: "Poppins, sans-serif",
                             margin: '0',
-                        } })) }), (0, jsx_runtime_1.jsx)("div", { style: {
+                        } })) }), _jsx("div", { style: {
                         position: 'absolute',
                         top: '48%', // تنظیم موقعیت عمودی
                         left: '29%', // موقعیت ستون جدید
@@ -320,19 +314,19 @@ exports.app.frame('/', async (c) => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '15px', // فاصله بین آیتم‌ها
-                    }, children: tipDataForAllUsers && tipDataForAllUsers.length > 0 ? (tipDataForAllUsers.map((data) => ((0, jsx_runtime_1.jsxs)("p", { style: {
+                    }, children: tipDataForAllUsers && tipDataForAllUsers.length > 0 ? (tipDataForAllUsers.map((data) => (_jsxs("p", { style: {
                             color: '#f39c12', // رنگ دلخواه
                             fontSize: '20px',
                             fontWeight: '400',
                             fontFamily: "Poppins, sans-serif",
                             margin: '0',
-                        }, children: [data.totalTipAmount || '0', " "] }, data.userFid + '-totalTipAmount')))) : ((0, jsx_runtime_1.jsx)("p", { style: {
+                        }, children: [data.totalTipAmount || '0', " "] }, data.userFid + '-totalTipAmount')))) : (_jsx("p", { style: {
                             color: '#f39c12',
                             fontSize: '20px',
                             fontWeight: '400',
                             fontFamily: "Poppins, sans-serif",
                             margin: '0',
-                        } })) }), (0, jsx_runtime_1.jsx)("div", { style: {
+                        } })) }), _jsx("div", { style: {
                         position: 'absolute',
                         top: '48%',
                         left: '61%', // تنظیم موقعیت جداگانه برای ستون تعداد دفعات
@@ -342,13 +336,13 @@ exports.app.frame('/', async (c) => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '13px', // فاصله بین آیتم‌ها
-                    }, children: topUsers.map((user) => ((0, jsx_runtime_1.jsx)("p", { style: {
+                    }, children: topUsers.map((user) => (_jsx("p", { style: {
                             color: '#ff0054',
                             fontSize: '20px',
                             fontWeight: '100',
                             fontFamily: "'Poppins', sans-serif",
                             margin: '0',
-                        }, children: user.count }, user.fid + '-count'))) }), (0, jsx_runtime_1.jsx)("div", { style: {
+                        }, children: user.count }, user.fid + '-count'))) }), _jsx("div", { style: {
                         position: 'absolute',
                         top: '48%',
                         left: '70%', // موقعیت ستون مقدار تیپ
@@ -358,13 +352,13 @@ exports.app.frame('/', async (c) => {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '15px',
-                    }, children: topUsers.map((user) => ((0, jsx_runtime_1.jsxs)("p", { style: {
+                    }, children: topUsers.map((user) => (_jsxs("p", { style: {
                             color: '#ff0054',
                             fontSize: '20px',
                             fontWeight: '400',
                             fontFamily: "Poppins, sans-serif",
                             margin: '0',
-                        }, children: [user.totalTipAmount || '0', " "] }, user.fid + '-totalAmount'))) }), pfpUrl && ((0, jsx_runtime_1.jsx)("img", { src: pfpUrl, alt: "Profile Picture", style: {
+                        }, children: [user.totalTipAmount || '0', " "] }, user.fid + '-totalAmount'))) }), pfpUrl && (_jsx("img", { src: pfpUrl, alt: "Profile Picture", style: {
                         width: '145px',
                         height: '145px',
                         borderRadius: '50%',
@@ -375,14 +369,14 @@ exports.app.frame('/', async (c) => {
                         border: '3px solid white',
                     } }))] })),
         intents: [
-            (0, jsx_runtime_1.jsx)(frog_1.Button, { value: "mystate", children: "My State" }),
-            (0, jsx_runtime_1.jsx)(frog_1.Button.Link, { href: generateWarpcastComposeUrl(shareUrl), children: "Share" }),
-            (0, jsx_runtime_1.jsx)(frog_1.Button.Link, { href: commentUrl, children: "Tip Me " }),
-            (0, jsx_runtime_1.jsx)(frog_1.Button.Link, { href: "https://warpcast.com/jeyloo.eth", children: "Jeyloo.eth" }),
+            _jsx(Button, { value: "mystate", children: "My State" }),
+            _jsx(Button.Link, { href: generateWarpcastComposeUrl(shareUrl), children: "Share" }),
+            _jsx(Button.Link, { href: commentUrl, children: "Tip Me " }),
+            _jsx(Button.Link, { href: "https://warpcast.com/jeyloo.eth", children: "Jeyloo.eth" }),
         ],
     });
 });
 // فعال‌سازی سرور
 const port = process.env.PORT || 3000;
-(0, node_server_1.serve)(exports.app);
+serve(app);
 console.log(`Server is running on port ${port}`);
