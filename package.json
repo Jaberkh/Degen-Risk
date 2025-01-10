@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "frog dev",
-      "start": "frog start"
+       "build": "tsc",
+    "start": "node build/index.js"
   },
   "dependencies": {
     "@airstack/frames": "^1.2.0",
