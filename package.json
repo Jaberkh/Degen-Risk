@@ -3,8 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "frog dev"
-  },
+    "dev": "frog dev",
+    "build": "tsc", 
+    "start": "node dist/index.js"},
+
   "dependencies": {
     "@airstack/frames": "^1.2.0",
     "@farcaster/hub-nodejs": "^0.12.7",
