@@ -579,7 +579,8 @@ console.log("Generated Comment URL:", commentUrl);
 });
 
 
-// فعال‌سازی سرور
 const port = process.env.PORT || 3000;
-serve(app);
+
+serve(app);; // استفاده از serve برای راه‌اندازی سرور
+
 console.log(`Server is running on port ${port}`);
