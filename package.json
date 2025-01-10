@@ -1,7 +1,6 @@
 {
   "name": "degen-tips",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "frog dev",
     "build": "tsc",
