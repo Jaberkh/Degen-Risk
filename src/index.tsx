@@ -302,9 +302,9 @@ console.log("Generated Comment URL:", commentUrl);
           style={{
             position: 'absolute',
             top: '5%',
-            left: '43%',
+            left: '40%',
             color: 'white',
-            textAlign: 'left',
+            textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
