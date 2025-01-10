@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "frog dev",
-    "build": "tsc", 
-    "start": "node dist/index.js"},
-
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "postinstall": "npm install"
+  },
   "dependencies": {
     "@airstack/frames": "^1.2.0",
     "@farcaster/hub-nodejs": "^0.12.7",
@@ -21,5 +22,8 @@
     "@types/dotenv": "^6.1.1",
     "@types/node": "^22.10.5",
     "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
