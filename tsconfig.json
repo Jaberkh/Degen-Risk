@@ -1,21 +1,20 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "CommonJS",
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "node", // تغییر از "bundler" به "node"
-    "allowImportingTsExtensions": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "outDir": "./dist", // مسیر خروجی فایل‌های کامپایل‌شده
     "jsx": "react-jsx",
     "jsxImportSource": "frog/jsx",
 
     /* Node.js and TypeScript Compatibility */
-    "types": ["node"], // اضافه کردن تایپ‌های Node.js
-    "esModuleInterop": true, // پشتیبانی از ماژول‌های ES
+    "types": ["node"],
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
 
     /* Linting */
