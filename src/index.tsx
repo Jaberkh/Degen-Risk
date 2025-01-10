@@ -249,7 +249,7 @@ app.frame('/', async (c) => {
    }
 
    function generateShareUrl(fid: string, username: string, pfpUrl: string, points: string | null): string {
-    const baseUrl = "https://0a7d-79-127-240-45.ngrok-free.app";
+    const baseUrl = "https://degen-risk.onrender.com";
     const url = `${baseUrl}?fid=${encodeURIComponent(fid)}&username=${encodeURIComponent(username)}&pfpUrl=${encodeURIComponent(pfpUrl)}&points=${encodeURIComponent(points || "0")}`;
     console.log("Generated Share URL:", url);
     return url;
