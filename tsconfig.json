@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
-    
-      "target": "ESNext",
-      "module": "ESNext",
-      "skipLibCheck": true,
-     
+    "target": "ESNext",
+    "module": "ESNext",
+    "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "node",
+    "moduleResolution": "node", // تغییر از "bundler" به "node"
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false,
-    "outDir": "./dist",
+    "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "frog/jsx",
 
     /* Node.js and TypeScript Compatibility */
-    "types": ["node"],
-    "esModuleInterop": true,
+    "types": ["node"], // اضافه کردن تایپ‌های Node.js
+    "esModuleInterop": true, // پشتیبانی از ماژول‌های ES
     "forceConsistentCasingInFileNames": true,
 
     /* Linting */
@@ -26,6 +24,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["**/*.ts", "**/*.tsx"]
 }
